@@ -6,3 +6,6 @@ first_name = gets.chomp.capitalize
 
 puts first_name
 
+gretting = "Hello World"
+
+"Hi World"
