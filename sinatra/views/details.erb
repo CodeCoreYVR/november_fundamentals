@@ -4,3 +4,13 @@
 <p>Email: <%= @contact.email %></p>
 <p>Message: <%= @contact.message %></p>
 <p>Department: <%= @contact.department %></p>
+<p>Note: <%= @contact.note %></p>
+
+<form action="/contact/<%= @contact.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="form-group">
+    <label for="note">Note</label>
+    <textarea id="note" name="note" class="form-control"><%= @contact.note %></textarea>
+  </div>
+  <input type="submit" value="Save Note" class="btn btn-primary">
+</form>

@@ -5,6 +5,23 @@ require "data_mapper"
 DataMapper::setup(:default, 
                   "sqlite3://#{Dir.pwd}/contact.db")
 
+use Rack::MethodOverride
+
+enable :sessions
+
+helpers do
+  def protected!
+    return if authorized?
+    headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
+    halt 401, "Not authorized\n"
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == ['admin', 'admin']
+  end
+end
+
 # DataMapper will look for a table named contacts
 class Contact
   include DataMapper::Resource
@@ -14,6 +31,7 @@ class Contact
   property :email, String
   property :message, Text
   property :department, String
+  property :note, Text
 
 end
 
@@ -30,6 +48,7 @@ get "/contact" do
 end
 
 get "/all" do
+  protected!
   # we instantiate a variable that is accessible 
   # in the views (with an @ before it)
   # Contact.all fetches all the recrods for Contact
@@ -39,8 +58,25 @@ get "/all" do
 end
 
 get "/details/:id" do |id|
+  protected!
   @contact = Contact.get id
+  session[:last_visited_user] = @contact.name
   erb :details, layout: :default
+end
+
+patch "/contact/:id" do |id|
+  protected!
+  @contact      = Contact.get id
+  @contact.note = params[:note]
+  @contact.save
+  redirect to("/details/#{id}")
+end
+
+delete "/contact/:id" do |id|
+  protected!
+  @contact = Contact.get id
+  @contact.destroy
+  redirect to("/all")
 end
 
 post "/contact" do

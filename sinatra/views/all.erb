@@ -5,12 +5,21 @@
     <th>Name</th>
     <th>Email</th>
     <th></th>
+    <th></th>
   </tr>
   <% @contacts.each do |contact| %>
     <tr>
       <td><%= contact.name %></td>
       <td><%= contact.email %></td>
-      <td><a href="/details/<%= contact.id %>" class="btn btn-info">Show</a></td>
+      <td>
+        <a href="/details/<%= contact.id %>" class="btn btn-info">Show</a>
+      </td>
+      <td>
+        <form action="/contact/<%= contact.id %>" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+      </td>
     </tr>
   <% end %>
 </table>
