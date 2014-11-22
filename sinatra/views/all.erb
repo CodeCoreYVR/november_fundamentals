@@ -1,0 +1,16 @@
+<h1>All Contacts</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
+  </tr>
+  <% @contacts.each do |contact| %>
+    <tr>
+      <td><%= contact.name %></td>
+      <td><%= contact.email %></td>
+      <td><a href="/details/<%= contact.id %>" class="btn btn-info">Show</a></td>
+    </tr>
+  <% end %>
+</table>

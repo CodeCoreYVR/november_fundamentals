@@ -2,12 +2,15 @@
 <html>
 <head>
   <title>Welcome to my App</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 </head>
 <body>
   <a href="/">Home</a>
   |
   <a href="/contact">Contact Us</a>
   <hr>
-  <%= yield %>
+  <div class="container">
+    <%= yield %>
+  </div>
 </body>
 </html>

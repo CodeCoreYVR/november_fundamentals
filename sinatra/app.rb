@@ -28,6 +28,20 @@ get "/contact" do
   erb :contact, layout: :default
 end
 
+get "/all" do
+  # we instantiate a variable that is accessible 
+  # in the views (with an @ before it)
+  # Contact.all fetches all the recrods for Contact
+  # from the database (contacts table).
+  @contacts = Contact.all
+  erb :all, layout: :default
+end
+
+get "/details/:id" do |id|
+  @contact = Contact.get id
+  erb :details, layout: :default
+end
+
 post "/contact" do
   Contact.create(name: params[:name],
                  email: params[:email],
