@@ -13,6 +13,7 @@ class Contact
   property :name, String
   property :email, String
   property :message, Text
+  property :department, String
 
 end
 
@@ -45,6 +46,7 @@ end
 post "/contact" do
   Contact.create(name: params[:name],
                  email: params[:email],
+                 department: params[:department],
                  message: params[:message])
   erb :thank_you, layout: :default
   # Pony.mail(to: "tam@codecore.ca",
