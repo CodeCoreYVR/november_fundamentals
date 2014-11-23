@@ -3,7 +3,7 @@ require "pony"
 require "data_mapper"
 
 DataMapper::setup(:default, 
-                  "sqlite3://#{Dir.pwd}/contact.db")
+                  ENV["DATABASE_URL"] || "sqlite3://#{Dir.pwd}/contact.db")
 
 use Rack::MethodOverride
 
@@ -70,6 +70,11 @@ patch "/contact/:id" do |id|
   @contact.note = params[:note]
   @contact.save
   redirect to("/details/#{id}")
+end
+
+get "/color/:color" do |color|
+  session[:color] = color
+  redirect back
 end
 
 delete "/contact/:id" do |id|

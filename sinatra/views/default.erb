@@ -3,13 +3,25 @@
 <head>
   <title>Welcome to my App</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: <%= session[:color] %>;
+    }
+  </style>
 </head>
 <body>
   <a href="/">Home</a>
   |
   <a href="/contact">Contact Us</a>
   |
-  <p>You Last Visited: <%= session[:last_visited_user] %></p>
+  You Last Visited: <%= session[:last_visited_user] %>
+  |
+  Pick BG Color: 
+  <a href="/color/red">Red</a>
+  <a href="/color/blue">Blue</a>
+  <a href="/color/yellow">Yellow</a>
+  <a href="/color/white">White</a>
+
   <hr>
   <div class="container">
     <%= yield %>
